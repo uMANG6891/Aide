@@ -11,4 +11,6 @@
     <dimen name="small_margin">8dp</dimen>
     <dimen name="micro_margin">4dp</dimen>
     <dimen name="nano_margin">2dp</dimen>
+    <dimen name="wc_assistant_width">300dp</dimen>
+    <dimen name="wc_assistant_height">210dp</dimen>
 </resources>

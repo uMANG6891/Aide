@@ -8,20 +8,65 @@
     android:fitsSystemWindows="true"
     tools:context="com.umangpandya.aide.WelcomeActivity">
 
-    <ScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <LinearLayout
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ScrollView
+            android:id="@+id/scrollView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_above="@+id/act_wc_ll_bottom_layout"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true">
 
-            <ImageView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_marginTop="@dimen/large_margin"
                 android:layout_height="wrap_content"
-                android:contentDescription="@string/app_name"
-                android:src="@mipmap/ic_launcher"/>
+                android:padding="@dimen/medium_margin"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/medium_margin"
+                    android:contentDescription="@string/app_name"
+                    android:src="@mipmap/ic_launcher"/>
+
+                <ImageView
+                    android:layout_width="@dimen/wc_assistant_width"
+                    android:layout_height="@dimen/wc_assistant_height"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/large_margin"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/assistant"/>
+
+                <TextView
+                    style="@style/Base.TextAppearance.AppCompat.Title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/large_margin"
+                    android:text="@string/welcome_title"/>
+
+                <TextView
+                    style="@style/Base.TextAppearance.AppCompat.Subhead"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/medium_margin"
+                    android:text="@string/welcome_description"/>
+            </LinearLayout>
+        </ScrollView>
+
+        <LinearLayout
+            android:id="@+id/act_wc_ll_bottom_layout"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/background_gray"
+            android:orientation="vertical">
         </LinearLayout>
-    </ScrollView>
+    </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>
