@@ -2,4 +2,5 @@
     <string name="app_name">Aide</string>
     <string name="welcome_title">Talk to your personal Assistant</string>
     <string name="welcome_description">Set Alarm, reminder and talk to Aide Assistant from the same app. Now it’s easier than ever to talk and get things done at the same time.</string>
+    <string name="error_could_not_login">Could not login</string>
 </resources>
