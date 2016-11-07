@@ -5,7 +5,7 @@ package com.umangpandya.aide.utility;
  */
 
 public class Constants {
-    public static final String BASE_URL = "http://127.0.0.1:8080/";
+    public static final String BASE_URL = "http://10.0.2.2:8080/";
 
     public class ResponseCode {
         public static final int SUCCESS = 0;

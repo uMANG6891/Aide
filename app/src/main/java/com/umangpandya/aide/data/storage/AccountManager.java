@@ -14,6 +14,7 @@ import com.umangpandya.aide.model.local.UserProfile;
 
 public class AccountManager {
     private static String SP_USER_DATA = "user_data";
+    private static String SP_REGISTERED_ON_SERVER = "registered_on_server";
 
     private static SharedPreferences createSharedPreferenceObject(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context);
@@ -44,5 +45,12 @@ public class AccountManager {
         return data != null ? gson.fromJson(data, UserProfile.class) : null;
     }
 
+    public static void saveHasRegisteredOnServer(Context context) {
+        createSharedPreferenceObject(context).edit().putBoolean(SP_REGISTERED_ON_SERVER, true).apply();
+    }
+
+    public static boolean hasRegisteredOnServer(Context context) {
+        return createSharedPreferenceObject(context).getBoolean(SP_REGISTERED_ON_SERVER, false);
+    }
 
 }

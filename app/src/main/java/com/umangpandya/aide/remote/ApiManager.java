@@ -65,7 +65,7 @@ public class ApiManager {
                     listener.done(response, true, returnAppropriateMessage(activity, activity.getString(R.string.unable_to_connect_server)));
                 } else {
                     listener.done(response,
-                            Utility.isSuccessful(response.body().getCode()),
+                            !Utility.isSuccessful(response.body().getCode()),
                             response.message());
                 }
             }

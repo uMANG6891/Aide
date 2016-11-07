@@ -39,7 +39,8 @@ public class WelcomeActivity extends AppCompatActivity implements GoogleApiClien
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         UserProfile userProfile = AccountManager.getUserData(this);
-        if (userProfile != null) {
+        boolean hasRegisteredOnServer = AccountManager.hasRegisteredOnServer(this);
+        if (userProfile != null && hasRegisteredOnServer) {
             startHomeActivity();
         } else {
             setContentView(R.layout.activity_welcome);
@@ -60,6 +61,11 @@ public class WelcomeActivity extends AppCompatActivity implements GoogleApiClien
             signInButton = (SignInButton) findViewById(R.id.act_wc_sib_login);
             signInButton.setSize(SignInButton.SIZE_WIDE);
             signInButton.setScopes(gso.getScopeArray());
+
+            if (userProfile != null && !hasRegisteredOnServer) {
+//                Save user information on the server
+                handleGooglePlusSignIn(true);
+            }
         }
     }
 
@@ -103,6 +109,7 @@ public class WelcomeActivity extends AppCompatActivity implements GoogleApiClien
                     if (hasError) {
                         updateUI(false, null);
                     } else {
+                        AccountManager.saveHasRegisteredOnServer(WelcomeActivity.this);
                         updateUI(true, null);
                     }
                 }
