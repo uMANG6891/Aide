@@ -3,7 +3,7 @@ package com.umangpandya.aide.ui.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.StringRes;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 
 import com.google.android.gms.auth.api.Auth;
@@ -16,11 +16,16 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.umangpandya.aide.R;
 import com.umangpandya.aide.data.storage.AccountManager;
 import com.umangpandya.aide.model.local.UserProfile;
+import com.umangpandya.aide.model.remote.request.RequestLogin;
+import com.umangpandya.aide.model.remote.response.ResponseBase;
+import com.umangpandya.aide.remote.ApiListeners;
+import com.umangpandya.aide.remote.ApiManager;
 import com.umangpandya.aide.utility.Debug;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.Response;
 
 public class WelcomeActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
@@ -81,24 +86,44 @@ public class WelcomeActivity extends AppCompatActivity implements GoogleApiClien
             // Signed in successfully, show authenticated UI.
             GoogleSignInAccount account = result.getSignInAccount();
             AccountManager.saveUserData(this, account);
-            updateUI(true);
+            handleGooglePlusSignIn(true);
         } else {
             // Signed out, show unauthenticated UI.
-            updateUI(false);
+            handleGooglePlusSignIn(false);
         }
     }
 
-    private void updateUI(boolean isLoginSuccessful) {
+    private void handleGooglePlusSignIn(boolean isLoginSuccessful) {
+        if (isLoginSuccessful) {
+            UserProfile userData = AccountManager.getUserData(this);
+            RequestLogin param = new RequestLogin(userData.getId(), userData.getDisplayName(), userData.getEmail(), userData.getPhotoUrl());
+            ApiManager.userSignIn(this, param, new ApiListeners.SignInListener() {
+                @Override
+                public void done(Response<ResponseBase> response, boolean hasError, String error) {
+                    if (hasError) {
+                        updateUI(false, null);
+                    } else {
+                        updateUI(true, null);
+                    }
+                }
+            });
+        } else {
+            updateUI(false, null);
+        }
+    }
+
+    private void updateUI(boolean isLoginSuccessful, String error) {
         if (isLoginSuccessful) {
             startHomeActivity();
         } else {
-            showError(R.string.error_could_not_login);
+            showError(error == null ? getString(R.string.error_could_not_login) : error);
         }
     }
 
-    private void showError(@StringRes int stringRes) {
-
-
+    private void showError(String errorMessage) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(errorMessage)
+                .show();
     }
 
     @Override

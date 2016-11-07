@@ -28,10 +28,14 @@ public class AccountManager {
         userProfile.setFamilyName(account.getFamilyName());
         userProfile.setGivenName(account.getGivenName());
         userProfile.setGrantedScopes(account.getGrantedScopes());
-        userProfile.setPhotoUrl(account.getPhotoUrl().toString());
+        userProfile.setPhotoUrl(
+                account.getPhotoUrl() == null
+                        ? null
+                        : account.getPhotoUrl().toString()
+        );
         userProfile.setServerAuthCode(account.getServerAuthCode());
         userProfile.setIdToken(account.getIdToken());
-        createSharedPreferenceObject(context).edit().putString(SP_USER_DATA,  gson.toJson(userProfile)).apply();
+        createSharedPreferenceObject(context).edit().putString(SP_USER_DATA, gson.toJson(userProfile)).apply();
     }
 
     public static UserProfile getUserData(Context context) {
