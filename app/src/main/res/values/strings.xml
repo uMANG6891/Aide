@@ -6,4 +6,12 @@
 
     <string name="unable_to_connect_server">Unable to connect to server.</string>
     <string name="no_internet_connection_available">No internet connection available</string>
+    <string name="image_of_the_user">Image of the User</string>
+    <string name="nav_author">Author</string>
+    <string name="nav_chat">Chat</string>
+    <string name="nav_title_more">More</string>
+    <string name="hint_type_a_message">Ask Aide</string>
+
+    <string name="text_copied">Message copied</string>
+    <string name="text_not_copied">Nothing to copy</string>
 </resources>

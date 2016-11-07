@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/item_mb_ll_main_click"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <include layout="@layout/item_message_date_bubble" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginTop="@dimen/activity_horizontal_margin"
+        android:background="@drawable/balloon_outgoing_normal"
+        android:orientation="vertical"
+        android:padding="4dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="4dp"
+            android:paddingEnd="16dp"
+            android:paddingLeft="4dp"
+            android:paddingRight="16dp"
+            android:paddingStart="4dp"
+            android:paddingTop="4dp">
+
+            <include layout="@layout/content_item_message_bubble" />
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

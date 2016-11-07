@@ -13,4 +13,9 @@
     <dimen name="nano_margin">2dp</dimen>
     <dimen name="wc_assistant_width">300dp</dimen>
     <dimen name="wc_assistant_height">210dp</dimen>
+
+    <dimen name="translucent_toolbar_padding_top">0dp</dimen>
+    <dimen name="user_nav_image_max_width">75dp</dimen>
+    <dimen name="user_nav_image_max_height">75dp</dimen>
+
 </resources>
