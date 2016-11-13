@@ -127,7 +127,6 @@ public class ChatActivity extends AppCompatActivity implements NavigationView.On
                         }
                     }, 300);
                 }
-
                 return false;
             }
         });

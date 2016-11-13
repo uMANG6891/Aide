@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -14,7 +16,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.umangpandya.aide.R;
 import com.umangpandya.aide.data.storage.AccountManager;
-import com.umangpandya.aide.model.local.Notes;
 import com.umangpandya.aide.model.local.UserProfile;
 import com.umangpandya.aide.ui.adapter.NotesAdapter;
 import com.umangpandya.aide.utility.Constants;
@@ -34,6 +35,7 @@ public class NotesActivity extends AppCompatActivity {
     private static final String TAG = NotesActivity.class.getSimpleName();
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.act_n_rv_list) RecyclerView rvNotes;
+    @BindView(R.id.act_n_tv_info) TextView tvInfo;
 
     NotesAdapter adapter;
     UserProfile currentUser;
@@ -86,7 +88,16 @@ public class NotesActivity extends AppCompatActivity {
     }
 
     private void updateNotes() {
-        adapter.swapData(DATA);
+        if (DATA != null) {
+            if (DATA.size() == 0) {
+                rvNotes.setVisibility(View.GONE);
+                tvInfo.setVisibility(View.VISIBLE);
+            } else {
+                rvNotes.setVisibility(View.VISIBLE);
+                tvInfo.setVisibility(View.GONE);
+            }
+            adapter.swapData(DATA);
+        }
     }
 
     @Override

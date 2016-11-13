@@ -18,4 +18,8 @@
     <string name="navigation_drawer_close">Close</string>
     <string name="nav_note">Note</string>
     <string name="title_notes">Notes</string>
+    <string name="dismiss">Dismiss</string>
+    <string name="delete_note_message">Delete this Note?</string>
+    <string name="delete">Delete</string>
+    <string name="no_notes">No notes</string>
 </resources>

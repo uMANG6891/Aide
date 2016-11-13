@@ -1,10 +1,13 @@
 package com.umangpandya.aide.ui.adapter;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
@@ -94,6 +97,47 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
                     }
                     // updating value
                     oneItem.getRef().setValue(oneNote);
+                }
+            });
+            view.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
+                            context,
+                            android.R.layout.simple_selectable_list_item);
+                    arrayAdapter.add("Delete");
+                    AlertDialog.Builder builderSingle = new AlertDialog.Builder(context);
+                    builderSingle.setAdapter(
+                            arrayAdapter,
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(final DialogInterface dialog, int which) {
+                                    switch (which) {
+                                        // Delete
+                                        case 0:
+                                            AlertDialog.Builder builderInner = new AlertDialog.Builder(context);
+                                            builderInner
+                                                    .setMessage(R.string.delete_note_message)
+                                                    .setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
+                                                                @Override
+                                                                public void onClick(DialogInterface dialog, int which) {
+                                                                    oneItem.getRef().removeValue();
+                                                                }
+                                                            })
+                                                    .setNegativeButton(R.string.dismiss, new DialogInterface.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                                            dialogInterface.dismiss();
+                                                        }
+                                                    })
+                                                    .show();
+                                            break;
+
+                                    }
+                                }
+                            });
+                    builderSingle.show();
+                    return true;
                 }
             });
             cbChecked.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
