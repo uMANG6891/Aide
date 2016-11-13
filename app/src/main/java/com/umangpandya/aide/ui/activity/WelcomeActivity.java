@@ -107,7 +107,7 @@ public class WelcomeActivity extends AppCompatActivity implements GoogleApiClien
                 @Override
                 public void done(Response<ResponseBase> response, boolean hasError, String error) {
                     if (hasError) {
-                        updateUI(false, null);
+                        updateUI(false, error);
                     } else {
                         AccountManager.saveHasRegisteredOnServer(WelcomeActivity.this);
                         updateUI(true, null);

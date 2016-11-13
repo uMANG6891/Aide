@@ -9,11 +9,13 @@
     <include layout="@layout/item_message_date_bubble"/>
 
     <LinearLayout
+        android:layout_marginStart="@dimen/micro_margin"
+        android:layout_marginLeft="@dimen/micro_margin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
         android:layout_marginTop="@dimen/activity_horizontal_margin"
-        android:background="@drawable/balloon_incoming_normal"
+        android:background="@drawable/bubble_bg_aide"
         android:orientation="vertical"
         android:padding="4dp">
 
@@ -22,10 +24,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingBottom="4dp"
-            android:paddingEnd="4dp"
-            android:paddingLeft="16dp"
-            android:paddingRight="4dp"
-            android:paddingStart="16dp"
             android:paddingTop="4dp">
 
             <include layout="@layout/content_item_message_bubble"/>

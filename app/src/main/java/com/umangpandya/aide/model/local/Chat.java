@@ -6,7 +6,8 @@ package com.umangpandya.aide.model.local;
 
 public class Chat {
     private String from;
-    private int messageType;
+    private String action = "display";
+    private int message_type;
     private String body;
     private int status;
     private long timestamp;
@@ -14,9 +15,9 @@ public class Chat {
     public Chat() {
     }
 
-    public Chat(String from, int messageType, String body, int status, long timestamp) {
+    public Chat(String from, int message_type, String body, int status, long timestamp) {
         this.from = from;
-        this.messageType = messageType;
+        this.message_type = message_type;
         this.body = body;
         this.status = status;
         this.timestamp = timestamp;
@@ -26,39 +27,27 @@ public class Chat {
         return from;
     }
 
-    public void setFrom(String from) {
-        this.from = from;
+    public String getAction() {
+        return action;
     }
 
-    public int getMessageType() {
-        return messageType;
-    }
-
-    public void setMessageType(int messageType) {
-        this.messageType = messageType;
+    public int getMessage_type() {
+        return message_type;
     }
 
     public String getBody() {
         return body;
     }
 
-    public void setBody(String body) {
-        this.body = body;
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     public int getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
-        this.status = status;
-    }
-
     public long getTimestamp() {
         return timestamp;
-    }
-
-    public void setTimestamp(long timestamp) {
-        this.timestamp = timestamp;
     }
 }

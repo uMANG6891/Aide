@@ -1,12 +1,18 @@
 package com.umangpandya.aide.ui.activity;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -23,8 +29,9 @@ import com.umangpandya.aide.model.local.Chat;
 import com.umangpandya.aide.model.local.UserProfile;
 import com.umangpandya.aide.ui.adapter.MessageAdapter;
 import com.umangpandya.aide.utility.Constants;
-import com.umangpandya.aide.utility.Constants.*;
+import com.umangpandya.aide.utility.Constants.MessageType;
 import com.umangpandya.aide.utility.Debug;
+import com.umangpandya.aide.utility.UiUtility;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,10 +44,11 @@ import butterknife.OnClick;
  * Created by umang on 23/10/16.
  */
 
-public class ChatActivity extends AppCompatActivity {
+public class ChatActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG = ChatActivity.class.getSimpleName();
 
+    @BindView(R.id.drawer_layout) DrawerLayout drawer;
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.chat_lv_messages) ListView lvMessages;
     @BindView(R.id.chat_et_input) EditText etInput;
@@ -55,8 +63,6 @@ public class ChatActivity extends AppCompatActivity {
 
     UserProfile currentUser;
 
-    private boolean hasAlreadySentTypingStatus = false;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,10 +71,22 @@ public class ChatActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
-        UserProfile account = AccountManager.getUserData(this);
+//        UserProfile account = AccountManager.getUserData(this);
         if (actionBar != null) {
-            actionBar.setTitle(account.getDisplayName());
+//            actionBar.setTitle(account.getDisplayName());
+            actionBar.setTitle(getString(R.string.app_name));
         }
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        if (drawer != null) {
+            drawer.addDrawerListener(toggle);
+        }
+        toggle.syncState();
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        if (navigationView != null) {
+            navigationView.setNavigationItemSelectedListener(this);
+        }
+
         currentUser = AccountManager.getUserData(this);
 
         adapter = new MessageAdapter(this, null);
@@ -116,7 +134,7 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     @OnClick({R.id.chat_iv_send})
-    void onClick(){
+    void onClick() {
         String textContent = etInput.getText().toString().trim();
         if (textContent.length() > 0) {
             sendMessage(MessageType.TEXT, textContent, null);
@@ -216,4 +234,48 @@ public class ChatActivity extends AppCompatActivity {
 //            }.start();
 //        }
     }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.navigation_item_notes:
+                closeDrawer();
+                UiUtility.startNotesActivity(this);
+                return true;
+//            case R.id.nav_logout:
+//                closeDrawer();
+//                AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+//                dialog.setTitle(R.string.nav_logout)
+//                        .setMessage(R.string.logout_detail)
+//                        .setPositiveButton(R.string.nav_logout, new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int which) {
+//                                dialog.dismiss();
+//                                AccountManager.removeEveryThingFromSP(BaseActivity.this);
+//                                UIUtility.openRegisterPage(BaseActivity.this);
+//
+//                                LoginManager.getInstance().logOut();
+//                                finish();
+//                            }
+//                        })
+//                        .setNegativeButton(R.string.dismiss, new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int which) {
+//                                dialog.dismiss();
+//                            }
+//                        })
+//                        .show();
+//                return true;
+
+            default:
+                return false;
+        }
+    }
+
+    private void closeDrawer() {
+        if (drawer != null) {
+            drawer.closeDrawer(GravityCompat.START);
+        }
+    }
+
 }

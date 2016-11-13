@@ -7,6 +7,11 @@
             android:checked="true"
             android:icon="@drawable/nav_chat"
             android:title="@string/nav_chat" />
+        <item
+            android:id="@+id/navigation_item_notes"
+            android:checked="true"
+            android:icon="@drawable/nav_notes"
+            android:title="@string/nav_note" />
 
     </group>
 

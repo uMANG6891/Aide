@@ -8,6 +8,7 @@ public class RequestLogin {
     private final String user_id;
     private final String name;
     private final String email;
+    private final int os = 1; // For Android
     private final String profile_picture;
 
     public RequestLogin(String user_id, String name, String email, String profile_picture) {

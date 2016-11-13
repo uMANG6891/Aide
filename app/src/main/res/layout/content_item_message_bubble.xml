@@ -3,6 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
+    android:paddingEnd="@dimen/medium_margin"
+    android:paddingLeft="@dimen/medium_margin"
+    android:paddingRight="@dimen/medium_margin"
+    android:paddingStart="@dimen/medium_margin"
     android:orientation="vertical">
 
     <!--<ImageView-->
@@ -21,11 +25,12 @@
         android:id="@+id/item_mb_tv_body"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/activity_horizontal_margin"
         android:text="message"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColor="@android:color/white"/>
 
     <LinearLayout
+        android:layout_marginTop="@dimen/small_margin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
@@ -45,6 +50,7 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="4dp"
             android:layout_marginStart="4dp"
+            android:contentDescription="@null"
             android:src="@drawable/message_unsent"/>
     </LinearLayout>
 </LinearLayout>

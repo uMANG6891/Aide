@@ -136,9 +136,17 @@ public class Utility {
         return sdf.format(d);
     }
 
+    public static String geNotesTime(long timestamp) {
+        Date d = new Date(timestamp);
+        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm a", Locale.US);
+        return sdf.format(d);
+    }
+
     public static int getScreenWidth(AppCompatActivity context) {
         DisplayMetrics metrics = new DisplayMetrics();
         context.getWindowManager().getDefaultDisplay().getMetrics(metrics);
         return metrics.widthPixels;
     }
+
+
 }

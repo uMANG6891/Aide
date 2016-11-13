@@ -21,6 +21,8 @@
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header_chat"
+        app:itemIconTint="@android:color/black"
+        app:itemTextColor="@android:color/black"
         app:menu="@menu/main_navigation_drawer"/>
 
 

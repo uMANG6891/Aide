@@ -14,4 +14,8 @@
 
     <string name="text_copied">Message copied</string>
     <string name="text_not_copied">Nothing to copy</string>
+    <string name="navigation_drawer_open">Open</string>
+    <string name="navigation_drawer_close">Close</string>
+    <string name="nav_note">Note</string>
+    <string name="title_notes">Notes</string>
 </resources>

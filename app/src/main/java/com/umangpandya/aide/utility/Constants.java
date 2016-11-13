@@ -14,7 +14,7 @@ import java.lang.annotation.RetentionPolicy;
  */
 
 public class Constants {
-    public static final String BASE_URL = "http://10.0.2.2:8080/";
+    public static final String BASE_URL = "http://54.218.51.166:8080/";
     public static final String MESSAGE_SENDER_TYPE_AIDE = "1";
 
     public static DatabaseReference getFirebaseMessageUrl(Context context, String userId) {
@@ -22,6 +22,12 @@ public class Constants {
                 .child("threads")
                 .child(userId)
                 .child("messages");
+    }
+    public static DatabaseReference getFirebaseNotesUrl(Context context, String userId) {
+        return FirebaseDatabase.getInstance().getReference()
+                .child("list")
+                .child(userId)
+                .child("notes");
     }
 
     public class ResponseCode {

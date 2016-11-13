@@ -17,5 +17,6 @@
     <dimen name="translucent_toolbar_padding_top">0dp</dimen>
     <dimen name="user_nav_image_max_width">75dp</dimen>
     <dimen name="user_nav_image_max_height">75dp</dimen>
+    <dimen name="list_view_bottom_padding">72dp</dimen>
 
 </resources>

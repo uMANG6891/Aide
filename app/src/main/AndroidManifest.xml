@@ -23,6 +23,9 @@
         <activity
             android:name=".ui.activity.ChatActivity"
             android:theme="@style/AppTheme.DarkStatusBar"/>
+        <activity
+            android:name=".ui.activity.NotesActivity"
+            android:theme="@style/AppTheme.DarkStatusBar"/>
     </application>
 
 </manifest>

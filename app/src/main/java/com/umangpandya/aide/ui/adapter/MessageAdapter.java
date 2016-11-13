@@ -79,14 +79,16 @@ public class MessageAdapter extends BaseAdapter {
         }
         Date currentDate = new Date(chat.getTimestamp());
         String printDate = Utility.getTimeToBePrintedInChat(currentDate, lastDate);
+
+        UserProfile user = AccountManager.getUserData(con);
+        String message = chat.getBody();
+        message = message.replace("%firstName%", user.getGivenName());
+        message = message.replace("%fullName%", user.getDisplayName());
+
         if (getItemViewType(position) == SYSTEM_BUBBLE) {
             SystemVH systemVH = (SystemVH) holder;
-            String message = chat.getBody();
 
-            UserProfile user = AccountManager.getUserData(con);
 
-            message = message.replace("%firstName%", user.getGivenName());
-            message = message.replace("%fullName%", user.getDisplayName());
             systemVH.tvBody.setText(message);
 
             //adding date
@@ -108,13 +110,13 @@ public class MessageAdapter extends BaseAdapter {
                     bubbleVH.ivStatus.setVisibility(View.GONE);
                     break;
             }
-            bubbleVH.tvBody.setText(Utility.getLinkInMessage(con, chat.getBody()));
+            bubbleVH.tvBody.setText(Utility.getLinkInMessage(con, message));
             bubbleVH.tvBody.setMovementMethod(LinkMovementMethod.getInstance());
             bubbleVH.tvTime.setText(Utility.getMessagePrintableTime(chat.getTimestamp()));
             // show image if exists
-            if (chat.getMessageType() == MessageType.TEXT) {
+            if (chat.getMessage_type() == MessageType.TEXT) {
 //                bubbleVH.ivMessageImage.setVisibility(View.GONE);
-            } else if (chat.getMessageType() == MessageType.IMAGE) {
+            } else if (chat.getMessage_type() == MessageType.IMAGE) {
 //                bubbleVH.ivMessageImage.setVisibility(View.VISIBLE);
 //                bubbleVH.ivMessageImage.setScaleType(ImageView.ScaleType.CENTER);
 //                Glide.with(con)
@@ -140,7 +142,7 @@ public class MessageAdapter extends BaseAdapter {
 //                    new LoadImageInBackground().execute(chat.getImageUrl() + Constants.IMAGE_TYPE_LARGE,
 //                            folder,
 //                            chatImageLocation);
-            } else if (chat.getMessageType() == MessageType.LOCATION) {
+            } else if (chat.getMessage_type() == MessageType.LOCATION) {
 //                bubbleVH.ivMessageImage.setVisibility(View.GONE);
 //                bubbleVH.tvBody.setText("\uD83D\uDCCC Location sent  ");
 //                bubbleVH.tvBody.setOnClickListener(new View.OnClickListener() {

@@ -66,7 +66,7 @@ public class ApiManager {
                 } else {
                     listener.done(response,
                             !Utility.isSuccessful(response.body().getCode()),
-                            response.message());
+                            response.body().getMessage());
                 }
             }
 
