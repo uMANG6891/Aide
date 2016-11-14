@@ -22,4 +22,7 @@
     <string name="delete_note_message">Delete this Note?</string>
     <string name="delete">Delete</string>
     <string name="no_notes">No notes</string>
+    <string name="author_message">Designed and Developed by Umang Pandya</string>
+    <string name="title_widget_aide_notes">Aide Notes</string>
+    <string name="widget_text">Notes Widget</string>
 </resources>

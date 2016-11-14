@@ -2,6 +2,7 @@ package com.umangpandya.aide.utility;
 
 import android.content.Context;
 import android.support.annotation.IntDef;
+import android.support.annotation.StringDef;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -23,6 +24,7 @@ public class Constants {
                 .child(userId)
                 .child("messages");
     }
+
     public static DatabaseReference getFirebaseNotesUrl(Context context, String userId) {
         return FirebaseDatabase.getInstance().getReference()
                 .child("list")
@@ -33,6 +35,16 @@ public class Constants {
     public class ResponseCode {
         public static final int SUCCESS = 0;
         public static final int REQUIRED_PARAMETERS_MISSING = 902;
+    }
+
+    @Retention(RetentionPolicy.SOURCE)
+    @StringDef({ChatActionType.DISPLAY_TEXT,
+            ChatActionType.NOTE_CREATE,
+            ChatActionType.NOTE_SHOW})
+    public @interface ChatActionType {
+        String DISPLAY_TEXT = "display.text";
+        String NOTE_CREATE = "note.create";
+        String NOTE_SHOW = "note.show";
     }
 
     @Retention(RetentionPolicy.SOURCE)

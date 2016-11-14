@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingBottom="@dimen/medium_margin"
+    android:paddingTop="@dimen/medium_margin">
+
+    <CheckBox
+        android:id="@+id/item_n_cb_checked"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/item_n_tv_note"
+        style="@style/Base.TextAppearance.AppCompat.Subhead"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginEnd="@dimen/small_margin"
+        android:layout_marginLeft="@dimen/small_margin"
+        android:layout_marginRight="@dimen/small_margin"
+        android:layout_marginStart="@dimen/small_margin"
+        android:layout_weight="1"
+        android:text="jbsdj bskdjg s"
+        android:textColor="#000"/>
+
+    <!--<TextView-->
+    <!--android:id="@+id/item_n_tv_time"-->
+    <!--style="@style/Base.TextAppearance.AppCompat.Caption"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginEnd="@dimen/micro_margin"-->
+    <!--android:layout_marginRight="@dimen/micro_margin"-->
+    <!--android:text="time"/>-->
+
+</LinearLayout>

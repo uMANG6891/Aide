@@ -1,5 +1,6 @@
 package com.umangpandya.aide.ui.activity;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -8,6 +9,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -241,6 +243,12 @@ public class ChatActivity extends AppCompatActivity implements NavigationView.On
                 closeDrawer();
                 UiUtility.startNotesActivity(this);
                 return true;
+            case R.id.navigation_author:
+                closeDrawer();
+                AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+                dialog.setMessage(R.string.author_message)
+                        .show();
+            return true;
 //            case R.id.nav_logout:
 //                closeDrawer();
 //                AlertDialog.Builder dialog = new AlertDialog.Builder(this);

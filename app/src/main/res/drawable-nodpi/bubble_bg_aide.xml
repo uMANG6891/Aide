@@ -15,7 +15,7 @@
 
             <solid android:color="@color/bubble_aide"/>
 
-            <corners android:radius="500dp"/>
+            <corners android:radius="@dimen/medium_margin"/>
         </shape>
     </item>
 

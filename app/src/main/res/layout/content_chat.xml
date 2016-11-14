@@ -6,9 +6,9 @@
     android:fitsSystemWindows="true">
 
     <ImageView
-        android:contentDescription="@null"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:contentDescription="@null"
         android:scaleType="centerCrop"
         android:src="@drawable/background_chat"/>
 
@@ -22,75 +22,65 @@
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
             <ListView
                 android:id="@+id/chat_lv_messages"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="top"
-                android:divider="@null"
-                android:paddingBottom="@dimen/list_view_bottom_padding"
                 android:clipToPadding="false"
-                android:dividerHeight="0dp"/>
+                android:divider="@null"
+                android:dividerHeight="0dp"
+                android:paddingBottom="@dimen/list_view_bottom_padding"/>
 
             <LinearLayout
                 android:id="@+id/chat_ll_input_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
+                android:layout_marginBottom="@dimen/small_margin"
+                android:layout_marginEnd="@dimen/small_margin"
+                android:layout_marginLeft="@dimen/small_margin"
+                android:layout_marginRight="@dimen/small_margin"
+                android:layout_marginStart="@dimen/small_margin"
+                android:layout_marginTop="@dimen/small_margin"
+                android:background="@drawable/bubble_input"
                 android:orientation="horizontal">
 
-
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <EditText
+                    android:id="@+id/chat_et_input"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
-                    android:layout_marginBottom="@dimen/small_margin"
-                    android:layout_marginEnd="@dimen/small_margin"
-                    android:layout_marginLeft="@dimen/small_margin"
-                    android:layout_marginRight="@dimen/small_margin"
-                    android:layout_marginStart="@dimen/small_margin"
-                    android:layout_marginTop="@dimen/small_margin"
-                    android:background="@drawable/bubble_input"
-                    android:gravity="bottom"
-                    android:orientation="horizontal">
+                    android:layout_marginEnd="@dimen/activity_vertical_margin"
+                    android:layout_marginLeft="@dimen/activity_vertical_margin"
+                    android:layout_marginRight="@dimen/activity_vertical_margin"
+                    android:layout_marginStart="@dimen/activity_vertical_margin"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:hint="@string/hint_type_a_message"
+                    android:inputType="textMultiLine|textCapSentences"
+                    android:paddingBottom="16dp"
+                    android:paddingTop="16dp"/>
 
-                    <EditText
-                        android:id="@+id/chat_et_input"
-                        android:layout_width="0dp"
-                        android:background="@android:color/transparent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/activity_vertical_margin"
-                        android:layout_marginLeft="@dimen/activity_vertical_margin"
-                        android:layout_marginRight="@dimen/activity_vertical_margin"
-                        android:layout_marginStart="@dimen/activity_vertical_margin"
-                        android:layout_weight="1"
-                        android:hint="@string/hint_type_a_message"
-                        android:inputType="textMultiLine|textCapSentences"
-                        android:paddingBottom="16dp"
-                        android:paddingTop="16dp"/>
+                <ImageView
+                    android:id="@+id/chat_iv_send"
+                    android:layout_width="@dimen/large_margin"
+                    android:layout_height="@dimen/large_margin"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="@dimen/medium_margin"
+                    android:layout_marginRight="@dimen/medium_margin"
+                    android:src="@drawable/ic_action_send"/>
 
-                    <ImageView
-                        android:id="@+id/chat_iv_send"
-                        android:layout_width="@dimen/large_margin"
-                        android:layout_height="@dimen/large_margin"
-                        android:layout_gravity="center"
-                        android:layout_marginEnd="@dimen/medium_margin"
-                        android:layout_marginRight="@dimen/medium_margin"
-                        android:src="@drawable/ic_action_send"/>
-
-                    <!--<ImageView-->
-                    <!--android:id="@+id/chat_iv_camera"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_gravity="center"-->
-                    <!--android:paddingEnd="24dp"-->
-                    <!--android:paddingRight="24dp"-->
-                    <!--android:src="@drawable/ic_action_camera"/>-->
-                </LinearLayout>
+                <!--<ImageView-->
+                <!--android:id="@+id/chat_iv_camera"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:paddingEnd="24dp"-->
+                <!--android:paddingRight="24dp"-->
+                <!--android:src="@drawable/ic_action_camera"/>-->
             </LinearLayout>
-
         </FrameLayout>
     </LinearLayout>
 

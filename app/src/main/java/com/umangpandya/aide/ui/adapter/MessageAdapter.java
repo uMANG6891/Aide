@@ -1,9 +1,12 @@
 package com.umangpandya.aide.ui.adapter;
 
 import android.app.AlertDialog;
+import android.appwidget.AppWidgetManager;
 import android.content.ClipData;
 import android.content.ClipboardManager;
+import android.content.ComponentName;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -23,8 +26,10 @@ import com.umangpandya.aide.data.storage.AccountManager;
 import com.umangpandya.aide.model.local.Chat;
 import com.umangpandya.aide.model.local.UserProfile;
 import com.umangpandya.aide.utility.Constants;
+import com.umangpandya.aide.utility.Constants.ChatActionType;
 import com.umangpandya.aide.utility.Constants.MessageType;
 import com.umangpandya.aide.utility.Utility;
+import com.umangpandya.aide.widget.NotesWidgetProvider;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -84,6 +89,15 @@ public class MessageAdapter extends BaseAdapter {
         String message = chat.getBody();
         message = message.replace("%firstName%", user.getGivenName());
         message = message.replace("%fullName%", user.getDisplayName());
+
+//        Updating Widget
+        if (chat.getAction().equals(ChatActionType.NOTE_CREATE)) {
+            Intent intent = new Intent(con, NotesWidgetProvider.class);
+            intent.setAction("android.appwidget.action.APPWIDGET_UPDATE");
+            int ids[] = AppWidgetManager.getInstance(con).getAppWidgetIds(new ComponentName(con, NotesWidgetProvider.class));
+            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
+            con.sendBroadcast(intent);
+        }
 
         if (getItemViewType(position) == SYSTEM_BUBBLE) {
             SystemVH systemVH = (SystemVH) holder;

@@ -19,7 +19,7 @@
             android:layout_height="match_parent"
             app:layoutManager="GridLayoutManager"
             app:spanCount="1"
-            tools:listitem="@layout/lis_item_note"/>
+            tools:listitem="@layout/list_item_note"/>
 
         <TextView
             android:id="@+id/act_n_tv_info"

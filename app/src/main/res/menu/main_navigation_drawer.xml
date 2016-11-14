@@ -19,7 +19,7 @@
     <item android:title="@string/nav_title_more">
         <menu>
             <item
-                android:id="@+id/nav_terms"
+                android:id="@+id/navigation_author"
                 android:title="@string/nav_author" />
 
         </menu>

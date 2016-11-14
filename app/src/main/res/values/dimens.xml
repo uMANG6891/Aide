@@ -19,4 +19,8 @@
     <dimen name="user_nav_image_max_height">75dp</dimen>
     <dimen name="list_view_bottom_padding">72dp</dimen>
 
+    <!-- Widget -->
+    <dimen name="widget_detail_default_width">180dp</dimen>
+    <dimen name="widget_detail_default_height">110dp</dimen>
+
 </resources>
