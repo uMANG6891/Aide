@@ -89,7 +89,6 @@ public class NotesWidgetRemoteViews extends RemoteViewsService {
                 Notes note = dataSnapshot.getValue(Notes.class);
 
                 final RemoteViews views = new RemoteViews(getPackageName(), R.layout.widget_item_note);
-                Debug.e(TAG, "position", position);
                 views.setTextViewText(R.id.w_item_n_tv_note, note.getNote());
                 return views;
             }

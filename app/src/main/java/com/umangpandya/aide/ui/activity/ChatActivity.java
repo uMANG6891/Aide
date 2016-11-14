@@ -1,10 +1,12 @@
 package com.umangpandya.aide.ui.activity;
 
-import android.content.DialogInterface;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -20,7 +22,10 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -79,17 +84,52 @@ public class ChatActivity extends AppCompatActivity implements NavigationView.On
             actionBar.setTitle(getString(R.string.app_name));
         }
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
+                super.onDrawerSlide(drawerView, slideOffset);
+                UiUtility.closeKeyboard(ChatActivity.this, toolbar.getWindowToken());
+            }
+        };
         if (drawer != null) {
             drawer.addDrawerListener(toggle);
         }
         toggle.syncState();
+
+        currentUser = AccountManager.getUserData(this);
+
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         if (navigationView != null) {
             navigationView.setNavigationItemSelectedListener(this);
-        }
 
-        currentUser = AccountManager.getUserData(this);
+            View headerView = navigationView.getHeaderView(0);
+            if (headerView != null) {
+                String url = currentUser.getPhotoUrl();
+                url = url == null ? null : url.trim();
+                if (url != null && url.length() != 0 && !url.equalsIgnoreCase("null")) {
+                    final ImageView ivUserImage = (ImageView) headerView.findViewById(R.id.nav_bar_iv_user_image);
+                    Glide.with(this)
+                            .load(currentUser.getPhotoUrl())
+                            .asBitmap()
+                            .centerCrop()
+                            .placeholder(R.mipmap.ic_launcher)
+                            .error(R.mipmap.ic_launcher)
+                            .into(new BitmapImageViewTarget(ivUserImage) {
+                                @Override
+                                protected void setResource(Bitmap resource) {
+                                    RoundedBitmapDrawable circularBitmapDrawable =
+                                            RoundedBitmapDrawableFactory.create(getResources(), resource);
+                                    circularBitmapDrawable.setCircular(true);
+                                    ivUserImage.setImageDrawable(circularBitmapDrawable);
+                                }
+                            });
+                }
+                TextView tvName = (TextView) navigationView.getHeaderView(0).findViewById(R.id.nav_bar_tv_name);
+                TextView tvEmail = (TextView) navigationView.getHeaderView(0).findViewById(R.id.nav_bar_tv_email);
+                tvName.setText(currentUser.getDisplayName());
+                tvEmail.setText(currentUser.getEmail());
+            }
+        }
 
         adapter = new MessageAdapter(this, null);
         lvMessages.setAdapter(adapter);
@@ -248,7 +288,7 @@ public class ChatActivity extends AppCompatActivity implements NavigationView.On
                 AlertDialog.Builder dialog = new AlertDialog.Builder(this);
                 dialog.setMessage(R.string.author_message)
                         .show();
-            return true;
+                return true;
 //            case R.id.nav_logout:
 //                closeDrawer();
 //                AlertDialog.Builder dialog = new AlertDialog.Builder(this);

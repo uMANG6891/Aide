@@ -7,8 +7,6 @@ import android.content.ClipboardManager;
 import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
@@ -20,7 +18,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.umangpandya.aide.R;
 import com.umangpandya.aide.data.storage.AccountManager;
 import com.umangpandya.aide.model.local.Chat;
@@ -31,12 +28,8 @@ import com.umangpandya.aide.utility.Constants.MessageType;
 import com.umangpandya.aide.utility.Utility;
 import com.umangpandya.aide.widget.NotesWidgetProvider;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 /**
  * Created by umang on 07/11/16.
@@ -245,11 +238,13 @@ public class MessageAdapter extends BaseAdapter {
         TextView tvBody, tvTime, tvTimestamp;
         ImageView ivStatus;
         //        ImageView ivMessageImage;
-        LinearLayout llDate, llMain;
+        LinearLayout llDate, llMain, llInfo;
+        boolean isVisible = false;
 
         public BubbleVH(View itemView, final int position) {
             super(con);
             llMain = (LinearLayout) itemView.findViewById(R.id.item_mb_ll_main_click);
+            llInfo = (LinearLayout) itemView.findViewById(R.id.item_mb_ll_info);
             tvBody = (TextView) itemView.findViewById(R.id.item_mb_tv_body);
             tvBody.setMaxWidth((int) (Utility.getScreenWidth(con) * 0.7));
             tvTime = (TextView) itemView.findViewById(R.id.item_mb_tv_time);
@@ -275,6 +270,19 @@ public class MessageAdapter extends BaseAdapter {
 //                    }
 //                }
 //            });
+            llMain.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    handleSingleClick();
+                }
+            });
+            tvBody.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    handleSingleClick();
+                }
+            });
+
             llMain.setOnLongClickListener(new OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
@@ -289,6 +297,15 @@ public class MessageAdapter extends BaseAdapter {
                     return true;
                 }
             });
+        }
+
+        private void handleSingleClick() {
+            if (isVisible) {
+                llInfo.setVisibility(GONE);
+            } else {
+                llInfo.setVisibility(VISIBLE);
+            }
+            isVisible = !isVisible;
         }
 
         private void handleOnLongClick(int position) {
@@ -313,40 +330,6 @@ public class MessageAdapter extends BaseAdapter {
                 });
                 builder.show();
             }
-        }
-    }
-
-    public class LoadImageInBackground extends AsyncTask<String, Void, Void> {
-        @Override
-        protected Void doInBackground(String... params) {
-            try {
-                Bitmap resource = Glide.with(con)
-                        .load(params[0])
-                        .asBitmap()
-                        .into(-1, -1)
-                        .get();
-
-                // creating folder ithaka if it doesn't exists
-                File file = new File(params[1]);
-                boolean success = true;
-                if (!file.exists()) {
-                    success = file.mkdirs();
-                }
-
-                if (success) {
-                    try {
-                        resource.compress(
-                                Bitmap.CompressFormat.JPEG,
-                                100,
-                                new FileOutputStream(params[2]));
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    }
-                }
-            } catch (InterruptedException | ExecutionException e) {
-                e.printStackTrace();
-            }
-            return null;
         }
     }
 }

@@ -23,4 +23,6 @@
     <dimen name="widget_detail_default_width">180dp</dimen>
     <dimen name="widget_detail_default_height">110dp</dimen>
 
+    <dimen name="bubble_round">24dp</dimen>
+
 </resources>
