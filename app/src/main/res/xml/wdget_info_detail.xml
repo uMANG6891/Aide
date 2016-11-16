@@ -4,6 +4,6 @@
     android:initialLayout="@layout/widget_detail"
     android:minHeight="@dimen/widget_detail_default_height"
     android:minWidth="@dimen/widget_detail_default_width"
+    android:previewImage="@drawable/widget_screenshot"
     android:resizeMode="horizontal|vertical"
     android:updatePeriodMillis="0"/>
-    <!--android:previewImage="@drawable/widget_screenshot"-->

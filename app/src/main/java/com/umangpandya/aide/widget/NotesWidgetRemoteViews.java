@@ -44,24 +44,26 @@ public class NotesWidgetRemoteViews extends RemoteViewsService {
                 DATA = new ArrayList<>();
 
                 UserProfile currentUser = AccountManager.getUserData(context);
-                firebaseNotes = Constants.getFirebaseNotesUrl(context, currentUser.getId());
-                notesListener = new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        if (dataSnapshot != null) {
-                            DATA = new ArrayList<>();
-                            for (DataSnapshot data : dataSnapshot.getChildren()) {
-                                DATA.add(0, data);
+                if (currentUser != null) {
+                    firebaseNotes = Constants.getFirebaseNotesUrl(context, currentUser.getId());
+                    notesListener = new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            if (dataSnapshot != null) {
+                                DATA = new ArrayList<>();
+                                for (DataSnapshot data : dataSnapshot.getChildren()) {
+                                    DATA.add(0, data);
+                                }
                             }
                         }
-                    }
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        Debug.e(TAG, "onCancelled", databaseError.getDetails());
-                    }
-                };
-                firebaseNotes.addValueEventListener(notesListener);
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                            Debug.e(TAG, "onCancelled", databaseError.getDetails());
+                        }
+                    };
+                    firebaseNotes.addValueEventListener(notesListener);
+                }
 
             }
 
@@ -72,7 +74,9 @@ public class NotesWidgetRemoteViews extends RemoteViewsService {
 
             @Override
             public void onDestroy() {
-                firebaseNotes.removeEventListener(notesListener);
+                if (firebaseNotes != null) {
+                    firebaseNotes.removeEventListener(notesListener);
+                }
             }
 
             @Override
@@ -112,7 +116,9 @@ public class NotesWidgetRemoteViews extends RemoteViewsService {
             public boolean hasStableIds() {
                 return true;
             }
-        };
+        }
+
+                ;
     }
 
 }

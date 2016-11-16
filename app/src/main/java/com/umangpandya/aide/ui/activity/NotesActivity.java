@@ -20,6 +20,7 @@ import com.umangpandya.aide.model.local.UserProfile;
 import com.umangpandya.aide.ui.adapter.NotesAdapter;
 import com.umangpandya.aide.utility.Constants;
 import com.umangpandya.aide.utility.Debug;
+import com.umangpandya.aide.utility.UiUtility;
 
 import java.util.ArrayList;
 
@@ -48,19 +49,24 @@ public class NotesActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notes);
-        ButterKnife.bind(this);
-
-        setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setTitle(R.string.title_notes);
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
-
         currentUser = AccountManager.getUserData(this);
+        if (currentUser == null) {
+            finishAffinity();
+            UiUtility.startWelcomeActivity(this);
+        } else {
+            ButterKnife.bind(this);
 
-        adapter = new NotesAdapter(this, null);
-        rvNotes.setAdapter(adapter);
+            setSupportActionBar(toolbar);
+            ActionBar actionBar = getSupportActionBar();
+            if (actionBar != null) {
+                actionBar.setTitle(R.string.title_notes);
+                actionBar.setDisplayHomeAsUpEnabled(true);
+            }
+
+
+            adapter = new NotesAdapter(this, null);
+            rvNotes.setAdapter(adapter);
+        }
     }
 
     @Override

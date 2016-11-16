@@ -6,6 +6,7 @@ import android.os.IBinder;
 import android.view.inputmethod.InputMethodManager;
 
 import com.umangpandya.aide.ui.activity.NotesActivity;
+import com.umangpandya.aide.ui.activity.WelcomeActivity;
 
 /**
  * Created by umang on 13/11/16.
@@ -13,6 +14,10 @@ import com.umangpandya.aide.ui.activity.NotesActivity;
 
 public class UiUtility {
 
+    public static void startWelcomeActivity(Context context) {
+        Intent i = new Intent(context, WelcomeActivity.class);
+        context.startActivity(i);
+    }
     public static void startNotesActivity(Context context) {
         Intent i = new Intent(context, NotesActivity.class);
         context.startActivity(i);
