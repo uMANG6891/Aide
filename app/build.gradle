@@ -6,7 +6,7 @@ android {
         config {
             keyAlias 'key_alias'
             keyPassword 'keypassword'
-            storeFile file('/Users/umang/AndroidStudioProjects/Udacity/Aide/keys/key.jks')
+            storeFile file('keys/key.jks')
             storePassword 'keypassword'
         }
     }
