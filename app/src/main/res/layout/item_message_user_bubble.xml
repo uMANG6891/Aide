@@ -17,14 +17,14 @@
         android:layout_marginTop="@dimen/activity_horizontal_margin"
         android:background="@drawable/bubble_bg_sender"
         android:orientation="vertical"
-        android:padding="4dp">
+        android:padding="@dimen/micro_margin">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingBottom="4dp"
-            android:paddingTop="4dp">
+            android:paddingBottom="@dimen/micro_margin"
+            android:paddingTop="@dimen/micro_margin">
 
             <include layout="@layout/content_item_message_bubble"/>
 

@@ -42,7 +42,6 @@
             android:id="@+id/item_mb_tv_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="4:25 PM"
             android:textAppearance="@style/TextAppearance.AppCompat.Caption"
             android:textColor="@color/time_color"/>
 
@@ -50,9 +49,9 @@
             android:id="@+id/item_mb_iv_status"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginLeft="4dp"
+            android:layout_marginLeft="@dimen/micro_margin"
             android:tint="@android:color/white"
-            android:layout_marginStart="4dp"
+            android:layout_marginStart="@dimen/micro_margin"
             android:contentDescription="@null"
             android:src="@drawable/message_unsent"/>
     </LinearLayout>

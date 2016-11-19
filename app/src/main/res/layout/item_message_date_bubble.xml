@@ -27,14 +27,14 @@
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:layout_marginStart="@dimen/activity_horizontal_margin"
             android:layout_marginTop="@dimen/activity_horizontal_margin"
-            android:padding="4dp"
+            android:padding="@dimen/micro_margin"
             android:textAppearance="?android:textAppearanceSmall"
-            android:textColor="#888"/>
+            android:textColor="@color/date_color"/>
 
         <View
-            android:layout_width="52dp"
-            android:layout_height="1dp"
+            android:layout_width="@dimen/date_side_bar_width"
+            android:layout_height="@dimen/date_side_bar_height"
             android:layout_gravity="center"
-            android:background="#888"/>
+            android:background="@color/date_color"/>
     </LinearLayout>
 </LinearLayout>

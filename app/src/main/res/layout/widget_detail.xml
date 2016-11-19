@@ -33,7 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:divider="@color/background_gray"
-            android:dividerHeight="1dp"
+            android:dividerHeight="@dimen/date_side_bar_height"
             tools:listitem="@layout/list_item_note"/>
 
         <TextView

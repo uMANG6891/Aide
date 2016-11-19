@@ -17,8 +17,7 @@
         android:layout_marginLeft="@dimen/small_margin"
         android:layout_marginRight="@dimen/small_margin"
         android:layout_marginStart="@dimen/small_margin"
-        android:text="jbsdj bskdjg s"
-        android:textColor="#000"/>
+        android:textColor="@android:color/black"/>
 
     <!--<TextView-->
     <!--android:id="@+id/item_n_tv_time"-->

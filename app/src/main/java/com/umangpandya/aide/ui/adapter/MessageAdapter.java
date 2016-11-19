@@ -51,21 +51,24 @@ public class MessageAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View view, holder;
+        View holder;
         LayoutInflater inflater = LayoutInflater.from(con);
         switch (getItemViewType(position)) {
             case USER_BUBBLE:
-                view = inflater.inflate(R.layout.item_message_user_bubble, parent, false);
-                holder = new BubbleVH(view, position);
+                if (convertView == null)
+                    convertView = inflater.inflate(R.layout.item_message_user_bubble, parent, false);
+                holder = new BubbleVH(convertView, position);
                 break;
             case AIDE_BUBBLE:
-                view = inflater.inflate(R.layout.item_message_aide_bubble, parent, false);
-                holder = new BubbleVH(view, position);
+                if (convertView == null)
+                    convertView = inflater.inflate(R.layout.item_message_aide_bubble, parent, false);
+                holder = new BubbleVH(convertView, position);
                 break;
             default:
             case SYSTEM_BUBBLE:
-                view = inflater.inflate(R.layout.item_message_system_bubble, parent, false);
-                holder = new SystemVH(view, position);
+                if (convertView == null)
+                    convertView = inflater.inflate(R.layout.item_message_system_bubble, parent, false);
+                holder = new SystemVH(convertView, position);
                 break;
         }
         final Chat chat = CHATS.get(position);
@@ -173,7 +176,7 @@ public class MessageAdapter extends BaseAdapter {
                 bubbleVH.llDate.setVisibility(View.GONE);
             }
         }
-        return view;
+        return convertView;
     }
 
     @Override

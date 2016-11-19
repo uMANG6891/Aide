@@ -8,5 +8,6 @@
     <color name="bubble_user">#00897B</color>
     <color name="bubble_aide">#2962FF</color>
     <color name="time_color">#DDD</color>
+    <color name="date_color">#888</color>
 
 </resources>

@@ -31,7 +31,7 @@
                 android:layout_gravity="top"
                 android:clipToPadding="false"
                 android:divider="@null"
-                android:dividerHeight="0dp"
+                android:dividerHeight="@dimen/divider_height_zero"
                 android:paddingBottom="@dimen/list_view_bottom_padding"/>
 
             <LinearLayout
@@ -60,8 +60,8 @@
                     android:background="@android:color/transparent"
                     android:hint="@string/hint_type_a_message"
                     android:inputType="textMultiLine|textCapSentences"
-                    android:paddingBottom="16dp"
-                    android:paddingTop="16dp"/>
+                    android:paddingBottom="@dimen/medium_margin"
+                    android:paddingTop="@dimen/medium_margin"/>
 
                 <ImageView
                     android:id="@+id/chat_iv_send"

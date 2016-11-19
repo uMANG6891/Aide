@@ -12,27 +12,27 @@
         android:layout_marginTop="@dimen/activity_horizontal_margin"
         android:background="@drawable/balloon_system"
         android:orientation="vertical"
-        android:padding="4dp">
+        android:padding="@dimen/micro_margin">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingBottom="4dp"
-            android:paddingEnd="16dp"
-            android:paddingLeft="4dp"
-            android:paddingRight="16dp"
-            android:paddingStart="4dp"
-            android:paddingTop="4dp">
+            android:paddingBottom="@dimen/micro_margin"
+            android:paddingEnd="@dimen/medium_margin"
+            android:paddingLeft="@dimen/micro_margin"
+            android:paddingRight="@dimen/medium_margin"
+            android:paddingStart="@dimen/micro_margin"
+            android:paddingTop="@dimen/micro_margin">
 
             <TextView
                 android:id="@+id/item_mb_tv_body"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/activity_horizontal_margin"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                android:layout_marginStart="@dimen/activity_horizontal_margin"
-                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:layout_marginBottom="@dimen/medium_margin"
+                android:layout_marginLeft="@dimen/medium_margin"
+                android:layout_marginStart="@dimen/medium_margin"
+                android:layout_marginTop="@dimen/medium_margin"
                 android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                 android:textColor="@android:color/white"/>
 
