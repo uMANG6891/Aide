@@ -6,6 +6,7 @@ import android.support.annotation.StringDef;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.umangpandya.aide.data.provider.NotesContract.NoteEntry;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -64,5 +65,18 @@ public class Constants {
         int USER = 0;
         int AIDE = 1;
     }
+
+    public static final String[] NOTE_PROJECTION_COLS = {
+            NoteEntry.TABLE_NAME + "." + NoteEntry._ID,
+            NoteEntry.TABLE_NAME + "." + NoteEntry.COLUMN_KEY,
+            NoteEntry.TABLE_NAME + "." + NoteEntry.COLUMN_NOTE_TEXT,
+            NoteEntry.TABLE_NAME + "." + NoteEntry.COLUMN_CHECKED,
+            NoteEntry.TABLE_NAME + "." + NoteEntry.COLUMN_TIMESTAMP,
+    };
+    public static final int COL_NOTE_ID = 0;
+    public static final int COL_NOTE_KEY = 1;
+    public static final int COL_NOTE_TEXT = 2;
+    public static final int COL_NOTE_CHECKED = 3;
+    public static final int COL_NOTE_TIMESTAMP = 4;
 
 }

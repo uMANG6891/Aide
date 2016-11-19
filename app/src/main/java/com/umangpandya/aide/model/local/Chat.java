@@ -1,12 +1,14 @@
 package com.umangpandya.aide.model.local;
 
+import com.umangpandya.aide.utility.Constants.ChatActionType;
+
 /**
  * Created by umang on 07/11/16.
  */
 
 public class Chat {
     private String from;
-    private String action = "display";
+    @ChatActionType private String action = "display";
     private int message_type;
     private String body;
     private int status;

@@ -27,6 +27,12 @@
             android:name=".ui.activity.NotesActivity"
             android:theme="@style/AppTheme.DarkStatusBar"/>
 
+        <provider
+            android:name=".data.provider.NotesProvider"
+            android:authorities="com.umangpandya.aide"
+            android:exported="false"
+            android:syncable="true" />
+
         <!-- Widget-->
         <receiver
             android:name=".widget.NotesWidgetProvider"

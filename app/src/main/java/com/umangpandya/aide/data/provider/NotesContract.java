@@ -27,6 +27,7 @@ public class NotesContract {
 
         public static final String COLUMN_KEY = "key";
         public static final String COLUMN_NOTE_TEXT = "note_text";
+        public static final String COLUMN_CHECKED = "checked";
         public static final String COLUMN_TIMESTAMP = "time_stamp";
 
 

@@ -1,5 +1,7 @@
 package com.umangpandya.aide.ui.activity;
 
+import android.content.ContentValues;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -31,6 +33,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.umangpandya.aide.R;
+import com.umangpandya.aide.data.provider.NotesContract.NoteEntry;
 import com.umangpandya.aide.data.storage.AccountManager;
 import com.umangpandya.aide.model.local.Chat;
 import com.umangpandya.aide.model.local.UserProfile;
@@ -78,9 +81,7 @@ public class ChatActivity extends AppCompatActivity implements NavigationView.On
 
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
-//        UserProfile account = AccountManager.getUserData(this);
         if (actionBar != null) {
-//            actionBar.setTitle(account.getDisplayName());
             actionBar.setTitle(getString(R.string.app_name));
         }
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -222,11 +223,6 @@ public class ChatActivity extends AppCompatActivity implements NavigationView.On
                         chat = data.getValue(Chat.class);
                         chats.add(chat);
                         if (chat.getFrom().equals(Constants.MESSAGE_SENDER_TYPE_AIDE)) {
-                            // message sent by wizard
-                            if (chat.getStatus() == 1) {
-                                // play sound notifying new message on screen
-//                                Utility.playIncomingMessageOnUI(ChatActivity.this);
-                            }
                             if (chat.getStatus() == 1 || chat.getStatus() == 2) {
                                 DatabaseReference update = firebaseMessages.child(data.getKey());
                                 chat.setStatus(3);
@@ -235,6 +231,7 @@ public class ChatActivity extends AppCompatActivity implements NavigationView.On
                         }
                     }
                     updateChatData(chats);
+                    addNewNotesIfDoNotAlreadyHave(dataSnapshot);
                 }
             }
 
@@ -244,6 +241,37 @@ public class ChatActivity extends AppCompatActivity implements NavigationView.On
             }
         };
         firebaseMessages.addValueEventListener(messageListener);
+    }
+
+    private void addNewNotesIfDoNotAlreadyHave(DataSnapshot dataSnapshot) {
+        Chat chat;
+        for (DataSnapshot data : dataSnapshot.getChildren()) {
+            chat = data.getValue(Chat.class);
+            if (chat.getAction().equals(Constants.ChatActionType.NOTE_CREATE)) {
+                Cursor dataValue = getContentResolver().query(
+                        NoteEntry.CONTENT_URI,
+                        Constants.NOTE_PROJECTION_COLS,
+                        NoteEntry.COLUMN_KEY + " = ? ",
+                        new String[]{data.getKey()},
+                        null);
+                if (dataValue == null || dataValue.getCount() == 0) {
+                    ContentValues cv = new ContentValues();
+                    cv.put(NoteEntry.COLUMN_KEY, data.getKey());
+                    cv.put(NoteEntry.COLUMN_NOTE_TEXT, chat.getBody());
+                    cv.put(NoteEntry.COLUMN_CHECKED, 0);
+                    cv.put(NoteEntry.COLUMN_TIMESTAMP, chat.getTimestamp());
+                    getContentResolver().insert(NoteEntry.CONTENT_URI, cv);
+                } else {
+                    dataValue.close();
+                }
+            }
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        firebaseMessages.removeEventListener(messageListener);
     }
 
     private void updateChatData(List<Chat> chats) {

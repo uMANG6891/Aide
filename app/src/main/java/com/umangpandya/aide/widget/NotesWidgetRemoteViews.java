@@ -2,24 +2,16 @@ package com.umangpandya.aide.widget;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Binder;
 import android.widget.AdapterView;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.ValueEventListener;
 import com.umangpandya.aide.R;
-import com.umangpandya.aide.data.storage.AccountManager;
-import com.umangpandya.aide.model.local.Notes;
-import com.umangpandya.aide.model.local.UserProfile;
+import com.umangpandya.aide.data.provider.NotesContract.NoteEntry;
 import com.umangpandya.aide.utility.Constants;
-import com.umangpandya.aide.utility.Debug;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by umang on 14/11/16.
@@ -33,67 +25,50 @@ public class NotesWidgetRemoteViews extends RemoteViewsService {
     @Override
     public RemoteViewsService.RemoteViewsFactory onGetViewFactory(Intent intent) {
         return new RemoteViewsFactory() {
-            List<DataSnapshot> DATA;
-            private DatabaseReference firebaseNotes;
-            private ValueEventListener notesListener;
+
+            Cursor cursor = null;
             Context context;
 
             @Override
             public void onCreate() {
                 context = getApplicationContext();
-                DATA = new ArrayList<>();
-
-                UserProfile currentUser = AccountManager.getUserData(context);
-                if (currentUser != null) {
-                    firebaseNotes = Constants.getFirebaseNotesUrl(context, currentUser.getId());
-                    notesListener = new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            if (dataSnapshot != null) {
-                                DATA = new ArrayList<>();
-                                for (DataSnapshot data : dataSnapshot.getChildren()) {
-                                    DATA.add(0, data);
-                                }
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-                            Debug.e(TAG, "onCancelled", databaseError.getDetails());
-                        }
-                    };
-                    firebaseNotes.addValueEventListener(notesListener);
-                }
-
             }
 
             @Override
             public void onDataSetChanged() {
-                Binder.restoreCallingIdentity(Binder.clearCallingIdentity());
+                Uri uri = NoteEntry.CONTENT_URI;
+                final long token = Binder.clearCallingIdentity();
+                try {
+                    cursor = getContentResolver().query(uri,
+                            Constants.NOTE_PROJECTION_COLS,
+                            null,
+                            null,
+                            null);
+                } finally {
+                    Binder.restoreCallingIdentity(token);
+                }
             }
 
             @Override
             public void onDestroy() {
-                if (firebaseNotes != null) {
-                    firebaseNotes.removeEventListener(notesListener);
+                if (cursor != null) {
+                    cursor.close();
                 }
             }
 
             @Override
             public int getCount() {
-                return DATA == null ? 0 : DATA.size();
+                return cursor == null ? 0 : cursor.getCount();
             }
 
             @Override
             public RemoteViews getViewAt(int position) {
-                if (position == AdapterView.INVALID_POSITION) {
+                if (position == AdapterView.INVALID_POSITION || cursor == null || !cursor.moveToPosition(position)) {
                     return null;
                 }
-                DataSnapshot dataSnapshot = DATA.get(position);
-                Notes note = dataSnapshot.getValue(Notes.class);
 
                 final RemoteViews views = new RemoteViews(getPackageName(), R.layout.widget_item_note);
-                views.setTextViewText(R.id.w_item_n_tv_note, note.getNote());
+                views.setTextViewText(R.id.w_item_n_tv_note, cursor.getString(Constants.COL_NOTE_TEXT));
                 return views;
             }
 

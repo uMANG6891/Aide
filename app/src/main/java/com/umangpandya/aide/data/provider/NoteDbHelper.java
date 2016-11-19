@@ -25,6 +25,7 @@ public class NoteDbHelper extends SQLiteOpenHelper {
                 + NoteEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + NoteEntry.COLUMN_KEY + " TEXT NOT NULL, "
                 + NoteEntry.COLUMN_NOTE_TEXT + " TEXT NOT NULL, "
+                + NoteEntry.COLUMN_CHECKED + " INTEGER NOT NULL, "
                 + NoteEntry.COLUMN_TIMESTAMP + " INTEGER NOT NULL);";
 
         db.execSQL(SQL_CREATE_NOTE_TABLE);

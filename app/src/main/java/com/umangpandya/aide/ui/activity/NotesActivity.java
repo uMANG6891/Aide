@@ -1,7 +1,11 @@
 package com.umangpandya.aide.ui.activity;
 
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -10,19 +14,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.ValueEventListener;
 import com.umangpandya.aide.R;
+import com.umangpandya.aide.data.provider.NotesContract.NoteEntry;
 import com.umangpandya.aide.data.storage.AccountManager;
 import com.umangpandya.aide.model.local.UserProfile;
 import com.umangpandya.aide.ui.adapter.NotesAdapter;
 import com.umangpandya.aide.utility.Constants;
-import com.umangpandya.aide.utility.Debug;
 import com.umangpandya.aide.utility.UiUtility;
-
-import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,7 +29,7 @@ import butterknife.ButterKnife;
  * Created by umang on 13/11/16.
  */
 
-public class NotesActivity extends AppCompatActivity {
+public class NotesActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
     private static final String TAG = NotesActivity.class.getSimpleName();
     @BindView(R.id.toolbar) Toolbar toolbar;
@@ -41,9 +39,9 @@ public class NotesActivity extends AppCompatActivity {
     NotesAdapter adapter;
     UserProfile currentUser;
 
-    private DatabaseReference firebaseNotes;
-    private ValueEventListener notesListener;
-    private ArrayList<DataSnapshot> DATA;
+    private Cursor DATA;
+
+    private static final int LOADER_NOTES = 0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -72,37 +70,23 @@ public class NotesActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        firebaseNotes = Constants.getFirebaseNotesUrl(this, currentUser.getId());
-        notesListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot != null) {
-                    DATA = new ArrayList<>();
-                    for (DataSnapshot data : dataSnapshot.getChildren()) {
-                        DATA.add(0, data);
-                    }
-                    updateNotes();
-                }
-            }
+        getSupportLoaderManager().initLoader(LOADER_NOTES, null, this);
+    }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Debug.e(TAG, "onCancelled", databaseError.getDetails());
-            }
-        };
-        firebaseNotes.addValueEventListener(notesListener);
+    @Override
+    protected void onPause() {
+        super.onPause();
+        getSupportLoaderManager().destroyLoader(LOADER_NOTES);
     }
 
     private void updateNotes() {
+        adapter.swapData(DATA);
         if (DATA != null) {
-            if (DATA.size() == 0) {
-                rvNotes.setVisibility(View.GONE);
-                tvInfo.setVisibility(View.VISIBLE);
-            } else {
-                rvNotes.setVisibility(View.VISIBLE);
-                tvInfo.setVisibility(View.GONE);
-            }
-            adapter.swapData(DATA);
+            rvNotes.setVisibility(View.VISIBLE);
+            tvInfo.setVisibility(View.GONE);
+        } else {
+            rvNotes.setVisibility(View.GONE);
+            tvInfo.setVisibility(View.VISIBLE);
         }
     }
 
@@ -116,5 +100,39 @@ public class NotesActivity extends AppCompatActivity {
             default:
                 return false;
         }
+    }
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        switch (id) {
+            case LOADER_NOTES:
+                return new CursorLoader(
+                        this,
+                        NoteEntry.CONTENT_URI,
+                        Constants.NOTE_PROJECTION_COLS,
+                        null,
+                        null,
+                        null
+                );
+            default:
+                return null;
+        }
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        switch (loader.getId()) {
+            case LOADER_NOTES:
+                DATA = data;
+                updateNotes();
+                break;
+            default:
+                break;
+        }
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+
     }
 }

@@ -80,6 +80,9 @@ public class MessageAdapter extends BaseAdapter {
 
         UserProfile user = AccountManager.getUserData(con);
         String message = chat.getBody();
+        if (chat.getAction().equals(Constants.ChatActionType.NOTE_CREATE)) {
+            message = "Added note  \"" + message + "\"";
+        }
         message = message.replace("%firstName%", user.getGivenName());
         message = message.replace("%fullName%", user.getDisplayName());
 
